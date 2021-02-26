@@ -3,33 +3,45 @@ import { Route, Redirect, Switch, withRouter } from 'react-router-dom';
 //translation
 import { setLanguage, translate } from 'react-switch-lang';
 //managers
-// import LocalStorageManager from '../managers/LocalStorageManger';
+import LocalStorageManager from '../managers/LocalStorageManger';
 //urls
 import { getNeedHelpPageUrl } from './routingConstants/AppUrls';
+//constants
+import { localStorageKeys } from '../constants/AppConstants';
 //component
 import App from '../../App';
 import NotFoundPage from '../containers/pages/NotFoundPage';
 
 const LangRouter = (props) => {
-	const [locale, setLocale] = useState('en-kw');
+	const availableLocales = ['en-kw', 'ar-kw'],
+		defaultLocale = 'en-kw',
+		[locale, setLocale] = useState(defaultLocale);
 
 	useEffect(() => {
-		const langCountry = props.location.pathname.substring(1, 6);
-		if (langCountry === 'en-kw' || langCountry === 'ar-kw') {
-			setLocale(langCountry);
+		const currentLocale = props.location.pathname.substring(1, 6);
+
+		if (availableLocales.includes(currentLocale)) {
+			updateLocale(currentLocale);
+		} else if (props.location.pathname === '/') {
+			updateLocale(defaultLocale);
 		}
 	}, []);
 
 	useEffect(() => {
-		const lang = props.location.pathname.substring(1, 3);
-		if (lang === 'en' || lang === 'ar') {
-			setLanguage(lang);
-		}
+		const lang = locale.substring(0, 2);
+		setLanguageHandler(lang);
 	}, [locale]);
 
+	const setLanguageHandler = (lang) => {
+		if (locale.includes(lang)) {
+			setLanguage(lang);
+			LocalStorageManager.setItem(localStorageKeys.language, lang);
+		}
+	};
+
 	const updateLocale = (newLocale) => {
-		//use the following line only if you want to store current locale in the locale storage
-		// LocalStorageManager.setItem('locale', newLocale);
+		const newPath = props.location.pathname.replace(locale, newLocale);
+		props.history.push(newPath);
 		setLocale(newLocale);
 	};
 

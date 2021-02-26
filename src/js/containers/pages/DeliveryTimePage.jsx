@@ -1,7 +1,7 @@
 import React from 'react';
 
 const DeliveryTimePage = () => {
-	return <div>Delivery time page placeholder</div>;
+	return <h1>Delivery time page.</h1>;
 };
 
 export default DeliveryTimePage;

@@ -1,9 +1,7 @@
 import React from 'react';
-//components
-import DetailsWrapper from '../../components/shared/DetailsWrapper';
 
 const NeedHelpPage = () => {
-	return <DetailsWrapper />;
+	return <h1>Need help page.</h1>;
 };
 
 export default NeedHelpPage;

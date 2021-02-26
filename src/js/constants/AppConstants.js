@@ -9,3 +9,7 @@ export const themeOptions = {
 		},
 	},
 };
+
+export const localStorageKeys = {
+	language: 'language',
+};
