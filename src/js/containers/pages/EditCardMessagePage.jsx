@@ -1,7 +1,8 @@
 import React from 'react';
+import { translate } from 'react-switch-lang';
 
-const EditCardMessagePage = () => {
-	return <h1>Edit card message page.</h1>;
+const EditCardMessagePage = ({ t }) => {
+	return <h1>{t('editCardMessage.title')}</h1>;
 };
 
-export default EditCardMessagePage;
+export default translate(EditCardMessagePage);

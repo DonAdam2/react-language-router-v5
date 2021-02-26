@@ -1,4 +1,23 @@
 export default {
-	text: 'قم بتحرير <code> src / App.js </code> وحفظه لإعادة التحميل. <br/> الآن باستخدام {what}!',
-	link: 'تعلم React.',
+	cancelOrder: {
+		title: 'صفحة إلغاء الطلب.',
+	},
+	customerCare: {
+		title: 'صفحة رعاية العميل.',
+	},
+	deliveryAddress: {
+		title: 'صفحة عنوان التسليم.',
+	},
+	deliveryTime: {
+		title: 'صفحة موعد التسليم.',
+	},
+	editCardMessage: {
+		title: 'صفحة تحرير رسالة البطاقة.',
+	},
+	NeedHelp: {
+		title: 'صفحة تحتاج مساعدة.',
+	},
+	notFound: {
+		title: '404 الصفحة غير موجودة.',
+	},
 };

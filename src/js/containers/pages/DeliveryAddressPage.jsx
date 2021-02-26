@@ -1,7 +1,8 @@
 import React from 'react';
+import { translate } from 'react-switch-lang';
 
-const DeliveryAddressPage = () => {
-	return <h1>Delivery address page.</h1>;
+const DeliveryAddressPage = ({ t }) => {
+	return <h1>{t('deliveryAddress.title')}</h1>;
 };
 
-export default DeliveryAddressPage;
+export default translate(DeliveryAddressPage);

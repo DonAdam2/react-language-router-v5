@@ -1,7 +1,8 @@
 import React from 'react';
+import { translate } from 'react-switch-lang';
 
-const DeliveryTimePage = () => {
-	return <h1>Delivery time page.</h1>;
+const DeliveryTimePage = ({ t }) => {
+	return <h1>{t('deliveryTime.title')}</h1>;
 };
 
-export default DeliveryTimePage;
+export default translate(DeliveryTimePage);

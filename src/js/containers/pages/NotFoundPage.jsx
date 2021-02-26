@@ -1,7 +1,8 @@
 import React from 'react';
+import { translate } from 'react-switch-lang';
 
-const NotFoundPage = () => {
-	return <h1>404 Page not found.</h1>;
+const NotFoundPage = ({ t }) => {
+	return <h1>{t('notFound.title')}</h1>;
 };
 
-export default NotFoundPage;
+export default translate(NotFoundPage);

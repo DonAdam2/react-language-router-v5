@@ -1,7 +1,8 @@
 import React from 'react';
+import { translate } from 'react-switch-lang';
 
-const CustomerCarePage = () => {
-	return <h1>Customer care page.</h1>;
+const CustomerCarePage = ({ t }) => {
+	return <h1>{t('customerCare.title')}</h1>;
 };
 
-export default CustomerCarePage;
+export default translate(CustomerCarePage);

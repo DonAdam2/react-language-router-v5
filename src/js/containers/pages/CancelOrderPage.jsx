@@ -1,7 +1,8 @@
 import React from 'react';
+import { translate } from 'react-switch-lang';
 
-const CancelOrderPage = () => {
-	return <h1>Cancel order page.</h1>;
+const CancelOrderPage = ({ t }) => {
+	return <h1>{t('cancelOrder.title')}</h1>;
 };
 
-export default CancelOrderPage;
+export default translate(CancelOrderPage);
