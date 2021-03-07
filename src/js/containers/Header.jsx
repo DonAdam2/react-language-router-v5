@@ -1,5 +1,4 @@
-import React, { useState } from 'react';
-import PropTypes from 'prop-types';
+import React, { useContext, useState } from 'react';
 import { NavLink } from 'react-router-dom';
 //routes
 import { routes } from '../routing/routingConstants/RoutesConfig';
@@ -7,19 +6,22 @@ import { routes } from '../routing/routingConstants/RoutesConfig';
 import LocalStorageManager from '../managers/LocalStorageManger';
 //constants
 import { localStorageKeys } from '../constants/AppConstants';
+//routing
+import { LocaleContext } from '../routing/LangRouter';
 
-const Header = ({ locale, setLocale }) => {
-	const [lang, setLang] = useState(LocalStorageManager.getItem(localStorageKeys.language));
+const Header = () => {
+	const localeContext = useContext(LocaleContext),
+		[lang, setLang] = useState(LocalStorageManager.getItem(localStorageKeys.language));
 
 	const changeLanguageHandler = ({ target: { value } }) => {
-		setLocale(`${value}-kw`);
+		localeContext.setLocale(`${value}-kw`);
 		setLang(value);
 	};
 
 	return (
 		<div className="header-wrapper">
 			{routes.map((el, i) => (
-				<NavLink key={i} to={el.path(locale)} exact={el.exact}>
+				<NavLink key={i} to={el.path(localeContext.locale)} exact={el.exact}>
 					{el.label}
 				</NavLink>
 			))}
@@ -29,11 +31,6 @@ const Header = ({ locale, setLocale }) => {
 			</select>
 		</div>
 	);
-};
-
-Header.propTypes = {
-	locale: PropTypes.string.isRequired,
-	setLocale: PropTypes.func.isRequired,
 };
 
 export default Header;

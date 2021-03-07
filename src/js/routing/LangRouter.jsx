@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { createContext, useEffect, useState } from 'react';
 import { Route, Redirect, Switch, withRouter } from 'react-router-dom';
 //translation
 import { setLanguage, translate } from 'react-switch-lang';
@@ -11,6 +11,11 @@ import { localStorageKeys } from '../constants/AppConstants';
 //component
 import App from '../../App';
 import NotFoundPage from '../containers/pages/NotFoundPage';
+
+export const LocaleContext = createContext({
+	locale: '',
+	setLocale: () => {},
+});
 
 const LangRouter = (props) => {
 	const availableLocales = ['en-kw', 'ar-kw'],
@@ -49,29 +54,20 @@ const LangRouter = (props) => {
 	};
 
 	return (
-		<Switch>
-			<Route
-				path="/"
-				exact
-				render={(propRouter) => {
-					return <Redirect to={getNeedHelpPageUrl(locale)} />;
-				}}
-			/>
-			<Route
-				path="/en-kw"
-				render={(propsRouter) => <App {...propsRouter} locale={locale} setLocale={updateLocale} />}
-			/>
-			<Route
-				path="/ar-kw"
-				render={(propsRouter) => <App {...propsRouter} locale={locale} setLocale={updateLocale} />}
-			/>
-			<Route
-				path="*"
-				render={(propsRouter) => (
-					<NotFoundPage {...propsRouter} locale={locale} setLocale={updateLocale} />
-				)}
-			/>
-		</Switch>
+		<LocaleContext.Provider value={{ locale, setLocale: updateLocale }}>
+			<Switch>
+				<Route
+					path="/"
+					exact
+					render={(propRouter) => {
+						return <Redirect to={getNeedHelpPageUrl(locale)} />;
+					}}
+				/>
+				<Route path="/en-kw" render={(propsRouter) => <App {...propsRouter} />} />
+				<Route path="/ar-kw" render={(propsRouter) => <App {...propsRouter} />} />
+				<Route path="*" render={(propsRouter) => <NotFoundPage {...propsRouter} />} />
+			</Switch>
+		</LocaleContext.Provider>
 	);
 };
 

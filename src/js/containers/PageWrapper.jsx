@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { Route, Switch } from 'react-router-dom';
 //routes
 import { routes } from '../routing/routingConstants/RoutesConfig';
@@ -9,25 +9,31 @@ import NotFoundPage from './pages/NotFoundPage';
 //constants
 import { localStorageKeys } from '../constants/AppConstants';
 import Header from './Header';
+//routing
+import { LocaleContext } from '../routing/LangRouter';
 
-const PageWrapper = (props) => (
-	<div
-		className="container"
-		dir={LocalStorageManager.getItem(localStorageKeys.language) === 'ar' ? 'rtl' : 'ltr'}
-	>
-		<Header {...props} />
-		<Switch>
-			{routes.map((el, i) => (
-				<Route
-					path={el.path(props.locale)}
-					render={(propRouter) => <el.Component {...propRouter} {...props} />}
-					key={i}
-					exact={el.exact}
-				/>
-			))}
-			<Route path="*" render={(propsRouter) => <NotFoundPage {...propsRouter} {...props} />} />
-		</Switch>
-	</div>
-);
+const PageWrapper = () => {
+	const localeContext = useContext(LocaleContext);
+
+	return (
+		<div
+			className="container"
+			dir={LocalStorageManager.getItem(localStorageKeys.language) === 'ar' ? 'rtl' : 'ltr'}
+		>
+			<Header />
+			<Switch>
+				{routes.map((el, i) => (
+					<Route
+						path={el.path(localeContext.locale)}
+						render={(propRouter) => <el.Component {...propRouter} />}
+						key={i}
+						exact={el.exact}
+					/>
+				))}
+				<Route path="*" render={(propsRouter) => <NotFoundPage {...propsRouter} />} />
+			</Switch>
+		</div>
+	);
+};
 
 export default PageWrapper;

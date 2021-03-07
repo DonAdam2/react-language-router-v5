@@ -7,7 +7,7 @@ import ErrorBoundaryFallback from './js/generic/ErrorBoundaryFallback';
 //containers
 import PageWrapper from './js/containers/PageWrapper';
 
-const App = (props) => (
+const App = () => (
 	<ErrorBoundary
 		FallbackComponent={ErrorBoundaryFallback}
 		onReset={() => {
@@ -15,7 +15,7 @@ const App = (props) => (
 			console.log('Try again clicked');
 		}}
 	>
-		<PageWrapper {...props} />
+		<PageWrapper />
 	</ErrorBoundary>
 );
 
