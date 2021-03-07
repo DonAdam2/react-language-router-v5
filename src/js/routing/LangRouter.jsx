@@ -24,6 +24,7 @@ const LangRouter = (props) => {
 			updateLocale(currentLocale);
 		} else if (props.location.pathname === '/') {
 			updateLocale(defaultLocale);
+			console.log('redirect');
 		}
 	}, []);
 
@@ -41,7 +42,9 @@ const LangRouter = (props) => {
 
 	const updateLocale = (newLocale) => {
 		const newPath = props.location.pathname.replace(locale, newLocale);
-		props.history.push(newPath);
+		if (props.location.pathname !== '/') {
+			props.history.push(newPath);
+		}
 		setLocale(newLocale);
 	};
 
