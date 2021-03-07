@@ -23,18 +23,17 @@ const LangRouter = (props) => {
 		[locale, setLocale] = useState(defaultLocale);
 
 	useEffect(() => {
-		const currentLocale = props.location.pathname.substring(1, 6);
+		const currentLocale = props.location.pathname.substring(1, 6).toLowerCase();
 
 		if (availableLocales.includes(currentLocale)) {
 			updateLocale(currentLocale);
 		} else if (props.location.pathname === '/') {
 			updateLocale(defaultLocale);
-			console.log('redirect');
 		}
 	}, []);
 
 	useEffect(() => {
-		const lang = locale.substring(0, 2);
+		const lang = locale.substring(0, 2).toLowerCase();
 		setLanguageHandler(lang);
 	}, [locale]);
 
