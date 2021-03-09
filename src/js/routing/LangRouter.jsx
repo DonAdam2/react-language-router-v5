@@ -17,17 +17,17 @@ export const LocaleContext = createContext({
 	setLocale: () => {},
 });
 
-const LangRouter = (props) => {
+const LangRouter = ({ location: { pathname, search, hash }, history }) => {
 	const availableLocales = ['en-kw', 'ar-kw'],
 		defaultLocale = 'en-kw',
 		[locale, setLocale] = useState(defaultLocale);
 
 	useEffect(() => {
-		const currentLocale = props.location.pathname.substring(1, 6).toLowerCase();
+		const currentLocale = pathname.substring(1, 6).toLowerCase();
 
 		if (availableLocales.includes(currentLocale)) {
 			updateLocale(currentLocale);
-		} else if (props.location.pathname === '/') {
+		} else if (pathname === '/') {
 			updateLocale(defaultLocale);
 		}
 	}, []);
@@ -45,9 +45,9 @@ const LangRouter = (props) => {
 	};
 
 	const updateLocale = (newLocale) => {
-		const newPath = props.location.pathname.replace(locale, newLocale);
-		if (props.location.pathname !== '/') {
-			props.history.push(newPath);
+		const newPath = pathname.replace(locale, newLocale);
+		if (pathname !== '/') {
+			history.push(`${newPath}${hash}${search}`);
 		}
 		setLocale(newLocale);
 	};
