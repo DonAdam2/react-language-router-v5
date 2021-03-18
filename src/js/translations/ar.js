@@ -7,6 +7,10 @@ export default {
 	},
 	deliveryAddress: {
 		title: 'صفحة عنوان التسليم.',
+		addDeliveryAddress: 'أضف عنوان تسليم',
+	},
+	addDeliveryAddress: {
+		title: 'صفحة أضف عنوان التسليم',
 	},
 	deliveryTime: {
 		title: 'صفحة موعد التسليم.',

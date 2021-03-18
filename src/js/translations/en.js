@@ -7,6 +7,10 @@ export default {
 	},
 	deliveryAddress: {
 		title: 'Delivery address page.',
+		addDeliveryAddress: 'Add delivery address',
+	},
+	addDeliveryAddress: {
+		title: 'Add delivery address page',
 	},
 	deliveryTime: {
 		title: 'Delivery time page.',
