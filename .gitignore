@@ -78,10 +78,6 @@ typings/
 # Yarn Integrity file
 .yarn-integrity
 
-# dotenv environment variables file
-.env
-.env.test
-
 # parcel-bundler cache (https://parceljs.org/)
 .cache
 
@@ -120,3 +116,9 @@ dist
 
 # TernJS port file
 .tern-port
+
+# analyze webpack output json file
+stats.json
+
+#npmrc because i'm storing my font awesome token inside it
+.npmrc
