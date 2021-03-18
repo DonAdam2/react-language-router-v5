@@ -5,19 +5,16 @@ import { hot } from 'react-hot-loader/root';
 import { ErrorBoundary } from 'react-error-boundary';
 //error boundary fallback
 import ErrorBoundaryFallback from './js/generic/ErrorBoundaryFallback';
-//managers
-import LocalStorageManager from './js/managers/LocalStorageManger';
 //routing
 import { LocaleContext } from './js/routing/LangRouter';
 import { routes } from './js/routing/routingConstants/RoutesConfig';
-//constants
-import { localStorageKeys } from './js/constants/AppConstants';
 //containers
 import Header from './js/containers/Header';
 import NotFoundPage from './js/containers/pages/NotFoundPage';
 
 const App = () => {
-	const localeContext = useContext(LocaleContext);
+	const localeContext = useContext(LocaleContext),
+		currentLanguage = localeContext.locale.substring(0, 2);
 
 	return (
 		<ErrorBoundary
@@ -27,10 +24,7 @@ const App = () => {
 				console.log('Try again clicked');
 			}}
 		>
-			<div
-				className="container"
-				dir={LocalStorageManager.getItem(localStorageKeys.language) === 'ar' ? 'rtl' : 'ltr'}
-			>
+			<div className="container" dir={currentLanguage === 'ar' ? 'rtl' : 'ltr'}>
 				<Header />
 				<Switch>
 					{routes.map((el, i) => (

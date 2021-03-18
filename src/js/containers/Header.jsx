@@ -1,17 +1,18 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { NavLink } from 'react-router-dom';
 //routes
 import { routes } from '../routing/routingConstants/RoutesConfig';
-//managers
-import LocalStorageManager from '../managers/LocalStorageManger';
-//constants
-import { localStorageKeys } from '../constants/AppConstants';
 //routing
 import { LocaleContext } from '../routing/LangRouter';
 
 const Header = () => {
 	const localeContext = useContext(LocaleContext),
-		[lang, setLang] = useState(LocalStorageManager.getItem(localStorageKeys.language));
+		currentLanguage = localeContext.locale.substring(0, 2),
+		[lang, setLang] = useState(currentLanguage);
+
+	useEffect(() => {
+		setLang(localeContext.locale.substring(0, 2));
+	}, [localeContext.locale]);
 
 	const changeLanguageHandler = ({ target: { value } }) => {
 		localeContext.setLocale(`${value}-kw`);

@@ -2,15 +2,13 @@ import React, { createContext, useEffect, useState } from 'react';
 import { Route, Redirect, Switch, withRouter } from 'react-router-dom';
 //translation
 import { setLanguage, translate } from 'react-switch-lang';
-//managers
-import LocalStorageManager from '../managers/LocalStorageManger';
 //urls
 import { getNeedHelpPageUrl } from './routingConstants/AppUrls';
-//constants
-import { localStorageKeys } from '../constants/AppConstants';
-//component
+//container
 import App from '../../App';
 import NotFoundPage from '../containers/pages/NotFoundPage';
+//component
+import LoadingIcon from '../components/UI/LoadingIcon';
 
 export const LocaleContext = createContext({
 	locale: '',
@@ -20,28 +18,30 @@ export const LocaleContext = createContext({
 const LangRouter = ({ location: { pathname, search, hash }, history }) => {
 	const availableLocales = ['en-kw', 'ar-kw'],
 		defaultLocale = 'en-kw',
+		pathnameLocale = pathname.substring(1, 6).toLowerCase(),
 		[locale, setLocale] = useState(defaultLocale);
 
 	useEffect(() => {
-		const currentLocale = pathname.substring(1, 6).toLowerCase();
-
-		if (availableLocales.includes(currentLocale)) {
-			updateLocale(currentLocale);
+		if (availableLocales.includes(pathnameLocale)) {
+			updateLocale(pathnameLocale);
 		} else if (pathname === '/') {
 			updateLocale(defaultLocale);
 		}
 	}, []);
 
 	useEffect(() => {
-		const lang = locale.substring(0, 2).toLowerCase();
-		setLanguageHandler(lang);
+		let lang = defaultLocale.substring(0, 2);
+
+		if (availableLocales.includes(pathnameLocale)) {
+			lang = pathnameLocale.substring(0, 2).toLowerCase();
+			setLanguageHandler(lang);
+		} else if (pathname === '/') {
+			setLanguageHandler(lang);
+		}
 	}, [locale]);
 
 	const setLanguageHandler = (lang) => {
-		if (locale.includes(lang)) {
-			setLanguage(lang);
-			LocalStorageManager.setItem(localStorageKeys.language, lang);
-		}
+		setLanguage(lang);
 	};
 
 	const updateLocale = (newLocale) => {
@@ -51,6 +51,14 @@ const LangRouter = ({ location: { pathname, search, hash }, history }) => {
 		}
 		setLocale(newLocale);
 	};
+
+	if (pathnameLocale !== locale && availableLocales.includes(pathnameLocale)) {
+		return (
+			<div className="loader-wrapper">
+				<LoadingIcon />
+			</div>
+		);
+	}
 
 	return (
 		<LocaleContext.Provider value={{ locale, setLocale: updateLocale }}>
@@ -62,8 +70,9 @@ const LangRouter = ({ location: { pathname, search, hash }, history }) => {
 						return <Redirect to={getNeedHelpPageUrl(locale)} />;
 					}}
 				/>
-				<Route path="/en-kw" render={(propsRouter) => <App {...propsRouter} />} />
-				<Route path="/ar-kw" render={(propsRouter) => <App {...propsRouter} />} />
+				{availableLocales.map((el, i) => (
+					<Route key={i} path={`/${el}`} render={(propsRouter) => <App {...propsRouter} />} />
+				))}
 				<Route path="*" render={(propsRouter) => <NotFoundPage {...propsRouter} />} />
 			</Switch>
 		</LocaleContext.Provider>
