@@ -1,6 +1,10 @@
 {
 	"name": "react-router-dom-localization",
 	"version": "1.0.0",
+	"engines": {
+		"node": "14.17.0",
+		"npm": "8.3.0"
+	},
 	"description": "Localization implemented using react router dom",
 	"main": "index.js",
 	"browserslist": [
