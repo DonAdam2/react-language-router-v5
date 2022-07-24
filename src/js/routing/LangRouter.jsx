@@ -45,8 +45,8 @@ const LangRouter = ({ location: { pathname, search, hash }, history }) => {
 	};
 
 	const updateLocale = (newLocale) => {
-		const newPath = pathname.replace(locale, newLocale);
-		if (pathname !== '/') {
+		const newPath = `/${newLocale}${pathname.substring(6)}`;
+		if (newPath !== `/${newLocale}/` || newPath !== `/${newLocale}` || pathname !== '/') {
 			history.push(`${newPath}${hash}${search}`);
 		}
 		setLocale(newLocale);
