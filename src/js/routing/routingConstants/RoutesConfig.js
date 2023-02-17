@@ -26,51 +26,51 @@ import AddDeliveryAddressPage from '@/js/containers/pages/AddDeliveryAddressPage
 export const publicRoutes = [
   {
     path: (locale) => getLoginPageUrl(locale),
-    Component: <LoginPage />,
+    component: <LoginPage />,
     restricted: true,
   },
   {
     path: (locale) => getAboutUsPageUrl(locale),
-    Component: <AboutUsPage />,
+    component: <AboutUsPage />,
   },
   {
     path: (locale) => getContactUsPageUrl(locale),
-    Component: <ContactUsPage />,
+    component: <ContactUsPage />,
   },
 ];
 
 export const deliveryAddressRoutes = [
   {
     path: (locale) => getAddDeliveryAddressPageUrl(locale),
-    Component: <AddDeliveryAddressPage />,
+    component: <AddDeliveryAddressPage />,
   },
 ];
 
 export const privateRoutes = [
   {
     path: (locale) => getNeedHelpPageUrl(locale),
-    Component: <NeedHelpPage />,
+    component: <NeedHelpPage />,
   },
   {
     path: (locale) => getDeliveryTimePageUrl(locale),
-    Component: <DeliveryTimePage />,
+    component: <DeliveryTimePage />,
   },
   {
     path: (locale) => getDeliveryAddressPageUrl(locale),
-    Component: <DeliveryAddressPage />,
+    component: <DeliveryAddressPage />,
   },
   {
     path: (locale) => getEditCardMessagePageUrl(locale),
-    Component: <EditCardMessagePage />,
+    component: <EditCardMessagePage />,
   },
   {
     path: (locale) => getCustomerCarePageUrl(locale),
-    Component: <CustomerCarePage />,
+    component: <CustomerCarePage />,
     permissions: 'customerCare',
   },
   {
     path: (locale) => getCancelOrderPageUrl(locale),
-    Component: <CancelOrderPage />,
+    component: <CancelOrderPage />,
   },
 ];
 
@@ -109,7 +109,7 @@ export const headerPrivateRoutes = (t) => [
   },
   {
     path: (locale) => getCancelOrderPageUrl(locale),
-    Component: <CancelOrderPage />,
+    component: <CancelOrderPage />,
   },
 ];
 

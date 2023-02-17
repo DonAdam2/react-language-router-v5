@@ -17,7 +17,6 @@ const RestrictedRouteGuard = ({ children, requiredPermissions, ...rest }) => {
       {...rest}
       render={(props) => {
         if (isAuthenticated()) {
-          console.log('yellow');
           return (
             <RestrictedWrapper
               requiredPermissions={requiredPermissions}

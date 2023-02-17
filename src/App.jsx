@@ -30,7 +30,7 @@ const App = () => {
         <Switch>
           {publicRoutes.map((el, i) => (
             <PublicRouteGuard restricted={el.restricted} path={el.path(locale)} key={i}>
-              {el.Component}
+              {el.component}
             </PublicRouteGuard>
           ))}
           {privateRoutes.map((el, i) => {
@@ -41,13 +41,13 @@ const App = () => {
                   path={el.path(locale)}
                   requiredPermissions={el.permissions}
                 >
-                  {el.Component}
+                  {el.component}
                 </RestrictedRouteGuard>
               );
             }
             return (
               <PrivateRouteGuard key={i} exact={el.exact} path={el.path(locale)}>
-                {el.Component}
+                {el.component}
               </PrivateRouteGuard>
             );
           })}
