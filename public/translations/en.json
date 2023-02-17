@@ -1,4 +1,13 @@
 {
+  "aboutUsPage": {
+    "title": "About us page"
+  },
+  "contactUsPage": {
+    "title": "Contact us page"
+  },
+  "loginPage": {
+    "title": "Login page"
+  },
   "cancelOrder": {
     "title": "Cancel order page."
   },
@@ -24,12 +33,21 @@
   "notFound": {
     "title": "404 Page not found."
   },
+  "noPermission": {
+    "title": "403 error",
+    "subtitle": "Unauthorized access!",
+    "description": "We are sorry but you don't have the required permission/s to access this page:"
+  },
   "header": {
+    "logout": "Logout",
     "cancelOrder": "Cancel order",
     "customerCare": "Customer care",
     "editCard": "Edit card",
     "deliveryAddress": "Delivery address",
     "deliveryTime": "Delivery time",
-    "needHelp": "Need help"
+    "needHelp": "Need help",
+    "login": "Login",
+    "aboutUs": "About us",
+    "contactUs": "Contact us"
   }
 }

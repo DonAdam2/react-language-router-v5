@@ -1,4 +1,13 @@
 {
+  "aboutUsPage": {
+    "title": "صفحة حولنا"
+  },
+  "contactUsPage": {
+    "title": "صفحة اتصل بنا"
+  },
+  "loginPage": {
+    "title": "صفحة تسجيل الدخول"
+  },
   "cancelOrder": {
     "title": "صفحة إلغاء الطلب."
   },
@@ -24,12 +33,21 @@
   "notFound": {
     "title": "404 الصفحة غير موجودة."
   },
+  "noPermission": {
+    "title": "خطأ ٤٠٣",
+    "subtitle": "دخول غير مرخص!",
+    "description": "نأسف ولكن ليس لديك الإذن / الأذونات المطلوبة للوصول إلى هذه الصفحة:"
+  },
   "header": {
+    "logout": "تسجيل خروج",
     "cancelOrder": "الغاء الطلب",
     "customerCare": "رعاية العميل",
     "editCard": "تحرير البطاقة",
     "deliveryAddress": "عنوان التسليم",
     "deliveryTime": "موعد التسليم",
-    "needHelp": "تحتاج مساعدة"
+    "needHelp": "تحتاج مساعدة",
+    "login": "تسجيل الدخول",
+    "aboutUs": "معلومات عنا",
+    "contactUs": "اتصل بنا"
   }
 }

@@ -1,26 +1,28 @@
 import { useContext } from 'react';
-import { Route, Link } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 //routing
 import { LocaleContext } from '@/js/routing/LangRouter';
 import { getAddDeliveryAddressPageUrl } from '@/js/routing/routingConstants/AppUrls';
 //pages
-import AddDeliveryAddressPage from './AddDeliveryAddressPage';
+import { deliveryAddressRoutes } from '@/js/routing/routingConstants/RoutesConfig';
+import PrivateRouteGuard from '@/js/routing/guards/PrivateRouteGuard';
 
 const DeliveryAddressPage = () => {
   const { t } = useTranslation(),
-    localeContext = useContext(LocaleContext);
+    { locale } = useContext(LocaleContext);
 
   return (
     <div>
       <h1>{t('deliveryAddress.title')}</h1>
-      <Link to={getAddDeliveryAddressPageUrl(localeContext.locale)}>
+      <Link to={getAddDeliveryAddressPageUrl(locale)}>
         {t('deliveryAddress.addDeliveryAddress')}
       </Link>
-      <Route
-        path={getAddDeliveryAddressPageUrl(localeContext.locale)}
-        component={AddDeliveryAddressPage}
-      />
+      {deliveryAddressRoutes.map((el, i) => (
+        <PrivateRouteGuard exact={el.exact} path={el.path(locale)} key={i}>
+          {el.Component}
+        </PrivateRouteGuard>
+      ))}
     </div>
   );
 };

@@ -1,16 +1,12 @@
-const PAGE_NEED_HELP = '',
-  PAGE_DELIVERY_TIME = '/delivery-time',
-  PAGE_DELIVERY_ADDRESS = '/delivery-address',
-  PAGE_EDIT_CARD_MESSAGE = '/edit-card-message',
-  PAGE_CUSTOMER_CARE = '/customer-care',
-  PAGE_CANCEL_ORDER = '/cancel-order',
-  ADD = '/add';
+export const getNeedHelpPageUrl = (locale) => `/${locale}/need-help`;
+export const getDeliveryTimePageUrl = (locale) => `/${locale}/delivery-time`;
+export const getDeliveryAddressPageUrl = (locale) => `/${locale}/delivery-address`;
+export const getAddDeliveryAddressPageUrl = (locale) => `${getDeliveryAddressPageUrl(locale)}/add`;
+export const getEditCardMessagePageUrl = (locale) => `/${locale}/edit-card-message`;
+export const getCustomerCarePageUrl = (locale) => `/${locale}/customer-care`;
+export const getCancelOrderPageUrl = (locale) => `/${locale}/cancel-order`;
+export const getLoginPageUrl = (locale) => `/${locale}/login`;
 
-export const getNeedHelpPageUrl = (locale) => `/${locale}${PAGE_NEED_HELP}`;
-export const getDeliveryTimePageUrl = (locale) => `/${locale}${PAGE_DELIVERY_TIME}`;
-export const getDeliveryAddressPageUrl = (locale) => `/${locale}${PAGE_DELIVERY_ADDRESS}`;
-export const getAddDeliveryAddressPageUrl = (locale) =>
-  `${getDeliveryAddressPageUrl(locale)}${ADD}`;
-export const getEditCardMessagePageUrl = (locale) => `/${locale}${PAGE_EDIT_CARD_MESSAGE}`;
-export const getCustomerCarePageUrl = (locale) => `/${locale}${PAGE_CUSTOMER_CARE}`;
-export const getCancelOrderPageUrl = (locale) => `/${locale}${PAGE_CANCEL_ORDER}`;
+export const getAboutUsPageUrl = (locale) => `/${locale}/about-us`;
+
+export const getContactUsPageUrl = (locale) => `/${locale}/contact-us`;

@@ -6,15 +6,16 @@ import { ErrorBoundary } from 'react-error-boundary';
 import ErrorBoundaryFallback from './js/generic/ErrorBoundaryFallback';
 //routing
 import { LocaleContext } from './js/routing/LangRouter';
-import { routes } from './js/routing/routingConstants/RoutesConfig';
+import { privateRoutes, publicRoutes } from './js/routing/routingConstants/RoutesConfig';
 //containers
 import Header from './js/containers/Header';
 import NotFoundPage from './js/containers/pages/NotFoundPage';
-import { useTranslation } from 'react-i18next';
+import PublicRouteGuard from '@/js/routing/guards/PublicRouteGuard';
+import PrivateRouteGuard from '@/js/routing/guards/PrivateRouteGuard';
+import RestrictedRouteGuard from '@/js/routing/guards/RistrictedRouteGuard';
 
 const App = () => {
-  const { t } = useTranslation(),
-    { locale } = useContext(LocaleContext);
+  const { locale } = useContext(LocaleContext);
 
   return (
     <ErrorBoundary
@@ -27,14 +28,29 @@ const App = () => {
       <div className="container">
         <Header />
         <Switch>
-          {routes(t).map((el, i) => (
-            <Route
-              path={el.path(locale)}
-              render={(propRouter) => <el.Component {...propRouter} />}
-              key={i}
-              exact={el.exact}
-            />
+          {publicRoutes.map((el, i) => (
+            <PublicRouteGuard restricted={el.restricted} path={el.path(locale)} key={i}>
+              {el.Component}
+            </PublicRouteGuard>
           ))}
+          {privateRoutes.map((el, i) => {
+            if (el.permissions) {
+              return (
+                <RestrictedRouteGuard
+                  key={i}
+                  path={el.path(locale)}
+                  requiredPermissions={el.permissions}
+                >
+                  {el.Component}
+                </RestrictedRouteGuard>
+              );
+            }
+            return (
+              <PrivateRouteGuard key={i} exact={el.exact} path={el.path(locale)}>
+                {el.Component}
+              </PrivateRouteGuard>
+            );
+          })}
           <Route path="*" render={(propsRouter) => <NotFoundPage {...propsRouter} />} />
         </Switch>
       </div>
