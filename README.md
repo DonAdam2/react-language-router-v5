@@ -1,34 +1,33 @@
-## This app supports the following:
+## Custom language router (react router dom v5):
 
-- SCSS preprocessor
-- To enable CSS modules (each component has it's own styles "no conflict between different components styles") => just open (webpack.prod.js && webpack.dev.js) and uncomment modules: true. Then in every component add the required import as follow: `import classes from './scss/requiredStyles'`
-- Autoprefixer for CSS (it supports IE >= 11)
-- Hot reloading for **JS** & **CSS** and **redux** store (in development)
-- Prettier (for code format)
-- Docker setup for development
+- The main purpose of this project is to create a localized react router.
+- It shows you how to utilize route guards
+- It uses [react-i18next](https://www.npmjs.com/package/react-i18next) package for translation
 
-## It has the following configuration for React:
+## It has the following route guards:
 
-- React router dom
-- Redux & Redux thunk & & Redux logger & Redux devTool
-- Prop types
-- 2 environments {production: .env, development: .env.development}
+- Private route guard => protect the given route based on a token.
+- Public route guard => used for public routes and authentication routes (ex: login, signup, ...etc) {if authenticated it will redirect the user to the home page}
+- Restricted route guard => protect the given route based on a token, and a list of permissions (can be an array or a string).
+- Restricted section => protect the given section based on a list of permissions (can be an array or a string).
 
 ## Prerequisites:
-- nodeJS > 12.X.X or Docker
+
+- nodeJS > 14.X.X or Docker
 
 ## Installing / Getting Started:
+
 ### Development (locally):
 
-- Clone repo => `git clone repo-url`
-- `cd frontend`
+- Clone repo => `git clone git@github.com:react-custom-projects/webpack-react-boilerplate.git`
+- `cd webpack-react-boilerplate`
 - Install dependencies => `yarn install`
 - Start the development server => `yarn start`
 
 ### Development (using Docker):
 
-- Clone repo => `git clone repo-url`
-- `cd frontend`
+- Clone repo => `git clone git@github.com:react-custom-projects/webpack-react-boilerplate.git`
+- `cd webpack-react-boilerplate`
 - Install dependencies (required for prettier) => `yarn install`
 - Start the development server => `docker-compose up --build`
 
@@ -38,12 +37,30 @@ Please keep in mind that environment variables configured using webpack which me
 
 ## Configuring Prettier
 
-This build relies on [Prettier formatter](https://prettier.io/) to enforce a code style. You can find steps on how to setup prettier formatter with WebStorm/PhpStorm [here](https://prettier.io/docs/en/webstorm.html#running-prettier-on-save-using-file-watcher). Please refer to other tutorials if you are using a different IDE.
+This build relies on [Prettier formatter](https://prettier.io/) to enforce a code style. And [ESLint](https://eslint.org/) for identifying problematic patterns found in JavaScript code.
 
-Notes:
+- Setting up prettier:
 
-- It's better to use the local `node_modules` version of prettier instead of a global one. This is to avoid version conflicts (in case the globally installed version does not match with the versions specified in `package.json`). So when setting up the file watcher when you follow the steps from the above link you can set `program` to `$ProjectFileDir$\node_modules\.bin\prettier` (warning this assumes that node_modules sits in the root of your project. This will need to change if your directory structure changes).
-- You will have to create two file watchers. One for JSX files and one for JS files. The webpack build tools are already configured to work with `eslint` and `prettier`. The only thing needed is the two file watchers.
+  1- You can find steps on how to set up prettier formatter with WebStorm/PhpStorm [here](https://prettier.io/docs/en/webstorm.html#running-prettier-on-save-using-file-watcher).
+
+  Notes:
+
+  - It's better to use the local `node_modules` version of prettier instead of a global one. This is to avoid version conflicts (in case the globally installed version does not match with the versions specified in `package.json`). So when setting up the file watcher when you follow the steps from the above link you can set `program` to `$ProjectFileDir$\node_modules\.bin\prettier` (warning this assumes that node_modules sits in the root of your project. This will need to change if your directory structure changes).
+  - You will have to create file watchers for TS, TSX and SCSS files. The webpack build tools are already configured to work with `eslint` and `prettier`. The only thing needed is the file watchers.
+
+  2- Follow the next steps to set up **prettier** and **eslint** on **_VS Code_**:
+
+  - Install `prettier` plugin
+
+  - Install `eslint` plugin
+
+  - Open **_VS Code settings_** `CTRL + ,`:
+
+    a- Search for `formatter` => check **Format on save**
+
+    b- Search for `prettier` => add `.prettierrc` in **_Prettier: Config Path_** section && check **_Prettier: Require Config_**
+
+  3- Please refer to other tutorials if you are using a different IDE.
 
 ## Site meta tags:
 
@@ -56,12 +73,12 @@ Notes:
 
 ## Extra:
 
-- Private route guard => protect the given route based on a token.
-- Restricted route guard => protect the given route based on a token, and a list of permissions (can be an array or a string).
-- Restricted section => protect the given section based on a list of permissions (can be an array or a string).
-- Generic error boundary fallback component (you can customize it) 
+- Generic error boundary fallback component (you can customize it)
 - Cookies, local storage and sessions storage mangers to store data in the browser. (**Note:** the data encrypted using crypto-js package before storing it.)
-- Font awesome
+- Basic mixins `(scss/generic/_mixins.scss)`
+- Normalize styles `(scss/generic/_normalize.scss)`
+- App typography styles `(scss/generic/_typography.scss)`
+- 4 break points `(scss/generic/_variables.scss)`
 
 ## Available Scripts
 
@@ -76,7 +93,6 @@ All changes will be injected automatically without reloading the page.<br>
 
 You will see in the console the following:
 
-- All redux store related changes
 - Any of the following errors:
   1. Linting errors.
   2. Code format errors (because of [prettier](https://prettier.io/))
@@ -89,10 +105,11 @@ It correctly bundles React in production mode and optimizes the build for the be
 The build is minified and the filenames include the hashes.<br>
 Your app is ready to be deployed!
 
-**_Note:_** You can install live-server globally (npm install -g live-server) which allows your to check your application in production by navigating to dist directory then use the following command:
-`live-server --port=8080 --entry-file=./index.html`
+### `yarn build:serve`
 
-By using live-server you can check your app in production without any need for xampp, wamp or any similar web server.
+Serves the app on `http://localhost:8080/` from the `dist` folder to check the production version.
+
+**_Note:_** Use this script only if you ran the build script `yarn build`.
 
 ### `yarn analyze-bundle`
 
