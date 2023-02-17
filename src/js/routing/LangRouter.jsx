@@ -1,4 +1,4 @@
-import React, { createContext, useEffect, useState } from 'react';
+import { createContext, useEffect, useState } from 'react';
 import { Route, Redirect, Switch, withRouter } from 'react-router-dom';
 //translation
 import { setLanguage, translate } from 'react-switch-lang';
@@ -11,72 +11,68 @@ import NotFoundPage from '../containers/pages/NotFoundPage';
 import LoadingIcon from '../components/UI/LoadingIcon';
 
 export const LocaleContext = createContext({
-	locale: '',
-	setLocale: () => {},
+  locale: '',
+  setLocale: () => {},
 });
 
 const LangRouter = ({ location: { pathname, search, hash }, history }) => {
-	const availableLocales = ['en-kw', 'ar-kw'],
-		defaultLocale = 'en-kw',
-		pathnameLocale = pathname.substring(1, 6).toLowerCase(),
-		[locale, setLocale] = useState(defaultLocale);
+  const availableLocales = ['en-kw', 'ar-kw'],
+    defaultLocale = 'en-kw',
+    pathnameLocale = pathname.substring(1, 6).toLowerCase(),
+    [locale, setLocale] = useState(defaultLocale);
 
-	useEffect(() => {
-		if (availableLocales.includes(pathnameLocale)) {
-			updateLocale(pathnameLocale);
-		} else if (pathname === '/') {
-			updateLocale(defaultLocale);
-		}
-	}, []);
+  useEffect(() => {
+    if (availableLocales.includes(pathnameLocale)) {
+      updateLocale(pathnameLocale);
+    } else if (pathname === '/') {
+      updateLocale(defaultLocale);
+    }
+    //eslint-disable-next-line
+  }, []);
 
-	useEffect(() => {
-		let lang = defaultLocale.substring(0, 2);
+  useEffect(() => {
+    let lang = defaultLocale.substring(0, 2);
 
-		if (availableLocales.includes(pathnameLocale)) {
-			lang = pathnameLocale.substring(0, 2).toLowerCase();
-			setLanguageHandler(lang);
-		} else if (pathname === '/') {
-			setLanguageHandler(lang);
-		}
-	}, [locale]);
+    if (availableLocales.includes(pathnameLocale)) {
+      lang = pathnameLocale.substring(0, 2).toLowerCase();
+      setLanguageHandler(lang);
+    } else if (pathname === '/') {
+      setLanguageHandler(lang);
+    }
+    //eslint-disable-next-line
+  }, [locale]);
 
-	const setLanguageHandler = (lang) => {
-		setLanguage(lang);
-	};
+  const setLanguageHandler = (lang) => {
+    setLanguage(lang);
+  };
 
-	const updateLocale = (newLocale) => {
-		const newPath = `/${newLocale}${pathname.substring(6)}`;
-		if (newPath !== `/${newLocale}/` || newPath !== `/${newLocale}` || pathname !== '/') {
-			history.push(`${newPath}${hash}${search}`);
-		}
-		setLocale(newLocale);
-	};
+  const updateLocale = (newLocale) => {
+    const newPath = `/${newLocale}${pathname.substring(6)}`;
+    if (newPath !== `/${newLocale}/` || newPath !== `/${newLocale}` || pathname !== '/') {
+      history.push(`${newPath}${hash}${search}`);
+    }
+    setLocale(newLocale);
+  };
 
-	if (pathnameLocale !== locale && availableLocales.includes(pathnameLocale)) {
-		return (
-			<div className="loader-wrapper">
-				<LoadingIcon />
-			</div>
-		);
-	}
+  if (pathnameLocale !== locale && availableLocales.includes(pathnameLocale)) {
+    return (
+      <div className="loader-wrapper">
+        <LoadingIcon />
+      </div>
+    );
+  }
 
-	return (
-		<LocaleContext.Provider value={{ locale, setLocale: updateLocale }}>
-			<Switch>
-				<Route
-					path="/"
-					exact
-					render={(propRouter) => {
-						return <Redirect to={getNeedHelpPageUrl(locale)} />;
-					}}
-				/>
-				{availableLocales.map((el, i) => (
-					<Route key={i} path={`/${el}`} render={(propsRouter) => <App {...propsRouter} />} />
-				))}
-				<Route path="*" render={(propsRouter) => <NotFoundPage {...propsRouter} />} />
-			</Switch>
-		</LocaleContext.Provider>
-	);
+  return (
+    <LocaleContext.Provider value={{ locale, setLocale: updateLocale }}>
+      <Switch>
+        <Route path="/" exact render={() => <Redirect to={getNeedHelpPageUrl(locale)} />} />
+        {availableLocales.map((el, i) => (
+          <Route key={i} path={`/${el}`} render={(propsRouter) => <App {...propsRouter} />} />
+        ))}
+        <Route path="*" render={(propsRouter) => <NotFoundPage {...propsRouter} />} />
+      </Switch>
+    </LocaleContext.Provider>
+  );
 };
 
 export default withRouter(translate(LangRouter));

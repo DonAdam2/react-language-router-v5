@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import { useContext } from 'react';
 import { Route, Link } from 'react-router-dom';
 //translate
 import { translate } from 'react-switch-lang';
@@ -9,20 +9,20 @@ import { getAddDeliveryAddressPageUrl } from '../../routing/routingConstants/App
 import AddDeliveryAddressPage from './AddDeliveryAddressPage';
 
 const DeliveryAddressPage = ({ t }) => {
-	const localeContext = useContext(LocaleContext);
+  const localeContext = useContext(LocaleContext);
 
-	return (
-		<div>
-			<h1>{t('deliveryAddress.title')}</h1>
-			<Link to={getAddDeliveryAddressPageUrl(localeContext.locale)}>
-				{t('deliveryAddress.addDeliveryAddress')}
-			</Link>
-			<Route
-				path={getAddDeliveryAddressPageUrl(localeContext.locale)}
-				component={AddDeliveryAddressPage}
-			/>
-		</div>
-	);
+  return (
+    <div>
+      <h1>{t('deliveryAddress.title')}</h1>
+      <Link to={getAddDeliveryAddressPageUrl(localeContext.locale)}>
+        {t('deliveryAddress.addDeliveryAddress')}
+      </Link>
+      <Route
+        path={getAddDeliveryAddressPageUrl(localeContext.locale)}
+        component={AddDeliveryAddressPage}
+      />
+    </div>
+  );
 };
 
 export default translate(DeliveryAddressPage);

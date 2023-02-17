@@ -1,6 +1,5 @@
-import React, { useContext } from 'react';
+import { useContext } from 'react';
 import { Route, Switch } from 'react-router-dom';
-import { hot } from 'react-hot-loader/root';
 //error boundary
 import { ErrorBoundary } from 'react-error-boundary';
 //error boundary fallback
@@ -13,33 +12,33 @@ import Header from './js/containers/Header';
 import NotFoundPage from './js/containers/pages/NotFoundPage';
 
 const App = () => {
-	const localeContext = useContext(LocaleContext),
-		currentLanguage = localeContext.locale.substring(0, 2);
+  const localeContext = useContext(LocaleContext),
+    currentLanguage = localeContext.locale.substring(0, 2);
 
-	return (
-		<ErrorBoundary
-			FallbackComponent={ErrorBoundaryFallback}
-			onReset={() => {
-				//Reset the state of your app so the error doesn't happen again
-				console.log('Try again clicked');
-			}}
-		>
-			<div className="container" dir={currentLanguage === 'ar' ? 'rtl' : 'ltr'}>
-				<Header />
-				<Switch>
-					{routes.map((el, i) => (
-						<Route
-							path={el.path(localeContext.locale)}
-							render={(propRouter) => <el.Component {...propRouter} />}
-							key={i}
-							exact={el.exact}
-						/>
-					))}
-					<Route path="*" render={(propsRouter) => <NotFoundPage {...propsRouter} />} />
-				</Switch>
-			</div>
-		</ErrorBoundary>
-	);
+  return (
+    <ErrorBoundary
+      FallbackComponent={ErrorBoundaryFallback}
+      onReset={() => {
+        //Reset the state of your app so the error doesn't happen again
+        console.log('Try again clicked');
+      }}
+    >
+      <div className="container" dir={currentLanguage === 'ar' ? 'rtl' : 'ltr'}>
+        <Header />
+        <Switch>
+          {routes.map((el, i) => (
+            <Route
+              path={el.path(localeContext.locale)}
+              render={(propRouter) => <el.Component {...propRouter} />}
+              key={i}
+              exact={el.exact}
+            />
+          ))}
+          <Route path="*" render={(propsRouter) => <NotFoundPage {...propsRouter} />} />
+        </Switch>
+      </div>
+    </ErrorBoundary>
+  );
 };
 
-export default hot(App);
+export default App;
