@@ -11,8 +11,8 @@ import LangRouter from './js/routing/LangRouter';
 import './scss/styles.scss';
 //translations
 import { setTranslations, setDefaultLanguage } from 'react-switch-lang';
-import en from './js/translations/en';
-import ar from './js/translations/ar';
+import en from '../public/translations/en';
+import ar from '../public/translations/ar';
 
 setTranslations({ en, ar });
 setDefaultLanguage('en');
