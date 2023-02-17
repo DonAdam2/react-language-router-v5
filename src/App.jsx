@@ -10,10 +10,11 @@ import { routes } from './js/routing/routingConstants/RoutesConfig';
 //containers
 import Header from './js/containers/Header';
 import NotFoundPage from './js/containers/pages/NotFoundPage';
+import { useTranslation } from 'react-i18next';
 
 const App = () => {
-  const localeContext = useContext(LocaleContext),
-    currentLanguage = localeContext.locale.substring(0, 2);
+  const { t } = useTranslation(),
+    { locale } = useContext(LocaleContext);
 
   return (
     <ErrorBoundary
@@ -23,12 +24,12 @@ const App = () => {
         console.log('Try again clicked');
       }}
     >
-      <div className="container" dir={currentLanguage === 'ar' ? 'rtl' : 'ltr'}>
+      <div className="container">
         <Header />
         <Switch>
-          {routes.map((el, i) => (
+          {routes(t).map((el, i) => (
             <Route
-              path={el.path(localeContext.locale)}
+              path={el.path(locale)}
               render={(propRouter) => <el.Component {...propRouter} />}
               key={i}
               exact={el.exact}

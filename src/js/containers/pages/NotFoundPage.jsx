@@ -1,7 +1,9 @@
-import { translate } from 'react-switch-lang';
+import { useTranslation } from 'react-i18next';
 
-const NotFoundPage = ({ t }) => {
+const NotFoundPage = () => {
+  const { t } = useTranslation();
+
   return <h1>{t('notFound.title')}</h1>;
 };
 
-export default translate(NotFoundPage);
+export default NotFoundPage;

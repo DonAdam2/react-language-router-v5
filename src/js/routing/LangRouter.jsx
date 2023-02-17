@@ -1,9 +1,9 @@
-import { createContext, useEffect, useState } from 'react';
+import { createContext, useEffect, useState, useRef } from 'react';
 import { Route, Redirect, Switch, withRouter } from 'react-router-dom';
-//translation
-import { setLanguage, translate } from 'react-switch-lang';
-//urls
+import { useTranslation } from 'react-i18next';
+//routing
 import { getNeedHelpPageUrl } from './routingConstants/AppUrls';
+import { getDefaultLanguage } from '@/js/routing/routingConstants/RoutingHelpers';
 //container
 import App from '../../App';
 import NotFoundPage from '../containers/pages/NotFoundPage';
@@ -12,14 +12,28 @@ import LoadingIcon from '../components/UI/LoadingIcon';
 
 export const LocaleContext = createContext({
   locale: '',
-  setLocale: () => {},
+  // eslint-disable-next-line
+  setLocale: (newLocale) => {},
 });
 
 const LangRouter = ({ location: { pathname, search, hash }, history }) => {
-  const availableLocales = ['en-kw', 'ar-kw'],
-    defaultLocale = 'en-kw',
-    pathnameLocale = pathname.substring(1, 6).toLowerCase(),
-    [locale, setLocale] = useState(defaultLocale);
+  const { i18n } = useTranslation(),
+    availableLocales = ['en', 'ar'],
+    defaultLocale =
+      getDefaultLanguage() === 'en' || getDefaultLanguage() === 'ar' ? getDefaultLanguage() : 'en',
+    pathnameLocale = pathname.substring(1, 3).toLowerCase(),
+    [locale, setLocale] = useState(defaultLocale),
+    loaderTimerRef = useRef(null),
+    [isLoading, setIsLoading] = useState(true);
+  //set body direction
+  document.body.dir = i18n.dir(i18n.language);
+
+  useEffect(() => {
+    loaderTimerRef.current = setTimeout(() => {
+      setIsLoading(false);
+      clearTimeout(loaderTimerRef.current);
+    }, 300);
+  }, []);
 
   useEffect(() => {
     if (availableLocales.includes(pathnameLocale)) {
@@ -28,13 +42,13 @@ const LangRouter = ({ location: { pathname, search, hash }, history }) => {
       updateLocale(defaultLocale);
     }
     //eslint-disable-next-line
-  }, []);
+  }, [pathname]);
 
   useEffect(() => {
-    let lang = defaultLocale.substring(0, 2);
+    let lang = defaultLocale;
 
     if (availableLocales.includes(pathnameLocale)) {
-      lang = pathnameLocale.substring(0, 2).toLowerCase();
+      lang = pathnameLocale;
       setLanguageHandler(lang);
     } else if (pathname === '/') {
       setLanguageHandler(lang);
@@ -43,18 +57,39 @@ const LangRouter = ({ location: { pathname, search, hash }, history }) => {
   }, [locale]);
 
   const setLanguageHandler = (lang) => {
-    setLanguage(lang);
+    //set language attribute on HTML element
+    document.documentElement.setAttribute('lang', lang);
+
+    (async () => {
+      if (lang === 'en') {
+        await i18n.changeLanguage('en-US');
+      } else {
+        await i18n.changeLanguage('ar-SA');
+      }
+    })();
   };
 
   const updateLocale = (newLocale) => {
-    const newPath = `/${newLocale}${pathname.substring(6)}`;
-    if (newPath !== `/${newLocale}/` || newPath !== `/${newLocale}` || pathname !== '/') {
-      history.push(`${newPath}${hash}${search}`);
+    const newPath = `/${newLocale}${pathname.substring(3)}`;
+
+    if (locale !== newLocale) {
+      if (newPath === `/${newLocale}/` || newPath === `/${newLocale}` || pathname === '/') {
+        history.push(getNeedHelpPageUrl(newLocale));
+      } else {
+        history.push(`${newPath}${hash}${search}`);
+      }
+      setLocale(newLocale);
+    } else if (newPath === `/${newLocale}/` || newPath === `/${newLocale}` || pathname === '/') {
+      history.push(getNeedHelpPageUrl(newLocale));
+      /*if (isAuthenticated()) {
+        history.push(getNeedHelpPageUrl(newLocale));
+      } else {
+        history.push(getLoginPageUrl(newLocale));
+      }*/
     }
-    setLocale(newLocale);
   };
 
-  if (pathnameLocale !== locale && availableLocales.includes(pathnameLocale)) {
+  if (isLoading) {
     return (
       <div className="loader-wrapper">
         <LoadingIcon />
@@ -75,4 +110,4 @@ const LangRouter = ({ location: { pathname, search, hash }, history }) => {
   );
 };
 
-export default withRouter(translate(LangRouter));
+export default withRouter(LangRouter);

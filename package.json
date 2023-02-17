@@ -75,8 +75,10 @@
   },
   "dependencies": {
     "crypto-js": "^4.1.1",
+    "i18next": "^22.4.9",
+    "i18next-browser-languagedetector": "^7.0.1",
     "react-error-boundary": "^3.1.4",
-    "react-router-dom": "^5.3.4",
-    "react-switch-lang": "^1.0.2"
+    "react-i18next": "^12.1.5",
+    "react-router-dom": "^5.3.4"
   }
 }

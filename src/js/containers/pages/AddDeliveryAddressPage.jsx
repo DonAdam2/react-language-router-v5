@@ -1,8 +1,9 @@
-//translate
-import { translate } from 'react-switch-lang';
+import { useTranslation } from 'react-i18next';
 
-const AddDeliveryAddressPage = ({ t }) => {
+const AddDeliveryAddressPage = () => {
+  const { t } = useTranslation();
+
   return <h1>{t('addDeliveryAddress.title')}</h1>;
 };
 
-export default translate(AddDeliveryAddressPage);
+export default AddDeliveryAddressPage;

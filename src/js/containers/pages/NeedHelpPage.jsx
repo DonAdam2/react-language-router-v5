@@ -1,7 +1,9 @@
-import { translate } from 'react-switch-lang';
+import { useTranslation } from 'react-i18next';
 
-const NeedHelpPage = ({ t }) => {
+const NeedHelpPage = () => {
+  const { t } = useTranslation();
+
   return <h1>{t('NeedHelp.title')}</h1>;
 };
 
-export default translate(NeedHelpPage);
+export default NeedHelpPage;

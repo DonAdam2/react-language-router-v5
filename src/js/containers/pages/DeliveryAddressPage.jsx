@@ -1,15 +1,15 @@
 import { useContext } from 'react';
 import { Route, Link } from 'react-router-dom';
-//translate
-import { translate } from 'react-switch-lang';
+import { useTranslation } from 'react-i18next';
 //routing
-import { LocaleContext } from '../../routing/LangRouter';
-import { getAddDeliveryAddressPageUrl } from '../../routing/routingConstants/AppUrls';
+import { LocaleContext } from '@/js/routing/LangRouter';
+import { getAddDeliveryAddressPageUrl } from '@/js/routing/routingConstants/AppUrls';
 //pages
 import AddDeliveryAddressPage from './AddDeliveryAddressPage';
 
-const DeliveryAddressPage = ({ t }) => {
-  const localeContext = useContext(LocaleContext);
+const DeliveryAddressPage = () => {
+  const { t } = useTranslation(),
+    localeContext = useContext(LocaleContext);
 
   return (
     <div>
@@ -25,4 +25,4 @@ const DeliveryAddressPage = ({ t }) => {
   );
 };
 
-export default translate(DeliveryAddressPage);
+export default DeliveryAddressPage;

@@ -15,36 +15,36 @@ import EditCardMessagePage from '../../containers/pages/EditCardMessagePage';
 import CustomerCarePage from '../../containers/pages/CustomerCarePage';
 import CancelOrderPage from '../../containers/pages/CancelOrderPage';
 
-export const routes = [
+export const routes = (t) => [
   {
     path: (locale) => getNeedHelpPageUrl(locale),
     Component: NeedHelpPage,
     exact: true,
-    label: 'need help',
+    label: t('header.needHelp'),
   },
   {
     path: (locale) => getDeliveryTimePageUrl(locale),
     Component: DeliveryTimePage,
-    label: 'delivery time',
+    label: t('header.deliveryTime'),
   },
   {
     path: (locale) => getDeliveryAddressPageUrl(locale),
     Component: DeliveryAddressPage,
-    label: 'delivery address',
+    label: t('header.deliveryAddress'),
   },
   {
     path: (locale) => getEditCardMessagePageUrl(locale),
     Component: EditCardMessagePage,
-    label: 'edit card message',
+    label: t('header.editCard'),
   },
   {
     path: (locale) => getCustomerCarePageUrl(locale),
     Component: CustomerCarePage,
-    label: 'customer care',
+    label: t('header.customerCare'),
   },
   {
     path: (locale) => getCancelOrderPageUrl(locale),
     Component: CancelOrderPage,
-    label: 'cancel order',
+    label: t('header.cancelOrder'),
   },
 ];
