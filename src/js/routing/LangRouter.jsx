@@ -3,7 +3,7 @@ import { Route, Redirect, Switch, withRouter } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 //routing
 import { getNeedHelpPageUrl } from './routingConstants/AppUrls';
-import { getDefaultLanguage } from '@/js/routing/routingConstants/RoutingHelpers';
+import { availableLocales, getDefaultLanguage } from '@/js/routing/routingConstants/RoutingHelpers';
 //container
 import App from '../../App';
 import NotFoundPage from '../containers/pages/NotFoundPage';
@@ -18,9 +18,7 @@ export const LocaleContext = createContext({
 
 const LangRouter = ({ location: { pathname, search, hash }, history }) => {
   const { i18n } = useTranslation(),
-    availableLocales = ['en', 'ar'],
-    defaultLocale =
-      getDefaultLanguage() === 'en' || getDefaultLanguage() === 'ar' ? getDefaultLanguage() : 'en',
+    defaultLocale = getDefaultLanguage({ fallbackLocal: 'en' }),
     pathnameLocale = pathname.substring(1, 3).toLowerCase(),
     [locale, setLocale] = useState(defaultLocale),
     loaderTimerRef = useRef(null),
