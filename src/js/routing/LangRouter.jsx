@@ -52,7 +52,7 @@ const LangRouter = ({ location: { pathname, search, hash }, history }) => {
       setLanguageHandler(lang);
     }
     //eslint-disable-next-line
-  }, [locale]);
+  }, [pathnameLocale, defaultLocale]);
 
   const setLanguageHandler = (lang) => {
     //set language attribute on HTML element
