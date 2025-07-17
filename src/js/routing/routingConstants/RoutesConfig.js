@@ -43,6 +43,7 @@ export const deliveryAddressRoutes = [
   {
     path: (locale) => getAddDeliveryAddressPageUrl(locale),
     component: <AddDeliveryAddressPage />,
+    exact: true,
   },
 ];
 
@@ -58,6 +59,7 @@ export const privateRoutes = [
   {
     path: (locale) => getDeliveryAddressPageUrl(locale),
     component: <DeliveryAddressPage />,
+    exact: false,
   },
   {
     path: (locale) => getEditCardMessagePageUrl(locale),

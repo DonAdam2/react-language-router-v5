@@ -1,5 +1,5 @@
 import { useContext } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, Switch } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 //routing
 import { LocaleContext } from '@/js/routing/LangRouter';
@@ -18,11 +18,13 @@ const DeliveryAddressPage = () => {
       <Link to={getAddDeliveryAddressPageUrl(locale)}>
         {t('deliveryAddress.addDeliveryAddress')}
       </Link>
-      {deliveryAddressRoutes.map((el, i) => (
-        <PrivateRouteGuard exact={el.exact} path={el.path(locale)} key={i}>
-          {el.Component}
-        </PrivateRouteGuard>
-      ))}
+      <Switch>
+        {deliveryAddressRoutes.map((el, i) => (
+          <PrivateRouteGuard exact={el.exact} path={el.path(locale)} key={i}>
+            {el.component}
+          </PrivateRouteGuard>
+        ))}
+      </Switch>
     </div>
   );
 };
