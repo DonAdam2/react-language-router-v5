@@ -23,36 +23,6 @@ const LangRouter = ({ location: { pathname, search, hash }, history }) => {
     [locale, setLocale] = useState(defaultLocale),
     loaderTimerRef = useRef(null),
     [isLoading, setIsLoading] = useState(true);
-  //set body direction
-  document.body.dir = i18n.dir(i18n.language);
-
-  useEffect(() => {
-    loaderTimerRef.current = setTimeout(() => {
-      setIsLoading(false);
-      clearTimeout(loaderTimerRef.current);
-    }, 300);
-  }, []);
-
-  useEffect(() => {
-    if (availableLocales.includes(pathnameLocale)) {
-      updateLocale(pathnameLocale);
-    } else if (pathname === '/') {
-      updateLocale(defaultLocale);
-    }
-    //eslint-disable-next-line
-  }, [pathname]);
-
-  useEffect(() => {
-    let lang = defaultLocale;
-
-    if (availableLocales.includes(pathnameLocale)) {
-      lang = pathnameLocale;
-      setLanguageHandler(lang);
-    } else if (pathname === '/') {
-      setLanguageHandler(lang);
-    }
-    //eslint-disable-next-line
-  }, [pathnameLocale, defaultLocale]);
 
   const setLanguageHandler = (lang) => {
     //set language attribute on HTML element
@@ -86,6 +56,54 @@ const LangRouter = ({ location: { pathname, search, hash }, history }) => {
       }*/
     }
   };
+
+  //set body direction
+  useEffect(() => {
+    document.body.dir = i18n.dir(i18n.language);
+  }, [i18n.language, i18n]);
+
+  useEffect(() => {
+    loaderTimerRef.current = setTimeout(() => {
+      setIsLoading(false);
+      clearTimeout(loaderTimerRef.current);
+    }, 300);
+  }, []);
+
+  useEffect(() => {
+    const newLocale = availableLocales.includes(pathnameLocale)
+      ? pathnameLocale
+      : pathname === '/'
+        ? defaultLocale
+        : null;
+
+    if (!newLocale) return;
+
+    const newPath = `/${newLocale}${pathname.substring(3)}`;
+    const isRootPath =
+      newPath === `/${newLocale}/` || newPath === `/${newLocale}` || pathname === '/';
+
+    if (locale !== newLocale) {
+      history.push(isRootPath ? getNeedHelpPageUrl(newLocale) : `${newPath}${hash}${search}`);
+    } else if (isRootPath) {
+      history.push(getNeedHelpPageUrl(newLocale));
+    }
+
+    // Defer state update to avoid synchronous setState in effect
+    queueMicrotask(() => setLocale(newLocale));
+    //eslint-disable-next-line
+  }, [pathname]);
+
+  useEffect(() => {
+    let lang = defaultLocale;
+
+    if (availableLocales.includes(pathnameLocale)) {
+      lang = pathnameLocale;
+      setLanguageHandler(lang);
+    } else if (pathname === '/') {
+      setLanguageHandler(lang);
+    }
+    //eslint-disable-next-line
+  }, [pathnameLocale, defaultLocale]);
 
   if (isLoading) {
     return (
