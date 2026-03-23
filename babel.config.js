@@ -19,11 +19,7 @@ module.exports = (api) => {
       [
         '@babel/preset-env',
         {
-          targets: {
-            browsers: ['ie >= 11', 'last 2 versions'],
-          },
-          useBuiltIns: 'entry',
-          corejs: '3',
+          targets: 'defaults',
         },
       ],
       ['@babel/preset-react', { runtime: hasJsxRuntime ? 'automatic' : 'classic' }],

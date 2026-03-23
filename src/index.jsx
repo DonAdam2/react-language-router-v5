@@ -3,8 +3,6 @@ import { BrowserRouter } from 'react-router-dom';
 import { I18nextProvider } from 'react-i18next';
 //import meta image
 import '@/public/assets/images/metaImage.jpg';
-// required for babel polyfills
-import 'regenerator-runtime/runtime';
 //root component
 import LangRouter from './js/routing/LangRouter';
 //styles
