@@ -1,4 +1,4 @@
-FROM node:14 as application_base
+FROM node:22-alpine AS application_base
 
 WORKDIR /usr/app
 
@@ -10,7 +10,7 @@ RUN yarn install --silent
 # Starting from application_base image above
 # Build the application for development environment
 #################################
-FROM application_base as development
+FROM application_base AS development
 
 # We are not copying anything because we are using bind mount in docker-compose file
 
@@ -21,14 +21,14 @@ CMD ["yarn", "start"]
 # Build the application for production environment
 #################################
 # step1 => build react app
-FROM application_base as build
+FROM application_base AS build
 
 COPY . ./
 
 RUN yarn build
 
 # step2 => copy react build into nginx (update it to meet your needs)
-FROM nginx:alpine as production
+FROM nginx:alpine AS production
 
 WORKDIR /usr/share/nginx/html
 
