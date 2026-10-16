@@ -67,7 +67,7 @@ module.exports = [
     settings: {
       'import/resolver': 'webpack',
       react: {
-        version: 'detect',
+        version: require('react/package.json').version,
       },
     },
   },

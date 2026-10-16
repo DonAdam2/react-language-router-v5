@@ -1,4 +1,4 @@
-import { useContext, useEffect, useState } from 'react';
+import { useContext } from 'react';
 import { NavLink, useHistory } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 //routes
@@ -18,16 +18,10 @@ import { isAuthenticated } from '@/js/constants/Helpers';
 const Header = () => {
   const { t } = useTranslation(),
     history = useHistory(),
-    { locale, setLocale } = useContext(LocaleContext),
-    [lang, setLang] = useState(locale);
-
-  useEffect(() => {
-    setLang(locale);
-  }, [locale]);
+    { locale, setLocale } = useContext(LocaleContext);
 
   const changeLanguageHandler = ({ target: { value } }) => {
     setLocale(value);
-    setLang(value);
   };
 
   const renderLink = ({ to, label, exact, key, permissions }) => {
@@ -70,7 +64,7 @@ const Header = () => {
             {t('header.logout')}
           </button>
         )}
-        <select onChange={changeLanguageHandler} value={lang}>
+        <select onChange={changeLanguageHandler} value={locale}>
           <option value="en">EN</option>
           <option value="ar">AR</option>
         </select>

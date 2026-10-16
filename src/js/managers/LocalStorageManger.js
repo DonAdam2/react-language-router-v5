@@ -8,6 +8,9 @@ class LocalStorageManager {
   }
   static getItem(key) {
     const value = localStorage.getItem(key);
+    if (value === null) {
+      return null;
+    }
     try {
       return decryptData(value);
     } catch (e) {
